@@ -43,6 +43,10 @@ import ImagePreview from "@/components/ImagePreview"
 // 字典标签组件
 import DictTag from '@/components/DictTag'
 
+import FlowEditor from '@/components/FlowEditor'
+
+import countTo from 'vue-count-to'
+
 const app = createApp(App)
 
 // 全局方法挂载
@@ -63,6 +67,8 @@ app.component('ImageUpload', ImageUpload)
 app.component('ImagePreview', ImagePreview)
 app.component('RightToolbar', RightToolbar)
 app.component('Editor', Editor)
+app.component('FlowEditor',FlowEditor)
+app.component('countTo',countTo)
 
 app.use(router)
 app.use(store)
