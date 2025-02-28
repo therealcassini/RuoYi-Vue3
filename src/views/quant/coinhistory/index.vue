@@ -17,14 +17,6 @@
           @keyup.enter="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="数量" prop="dealCount">
-        <el-input
-          v-model="queryParams.dealCount"
-          placeholder="请输入数量"
-          clearable
-          @keyup.enter="handleQuery"
-        />
-      </el-form-item>
       <el-form-item label="最高价" prop="high">
         <el-input
           v-model="queryParams.high"
@@ -166,7 +158,6 @@
       <el-table-column label="自增ID" align="center" prop="id" />
       <el-table-column label="交易金额" align="center" prop="amount" />
       <el-table-column label="最终价格" align="center" prop="finalPrice" />
-      <el-table-column label="数量" align="center" prop="dealCount" />
       <el-table-column label="最高价" align="center" prop="high" />
       <el-table-column label="最低价" align="center" prop="low" />
       <el-table-column label="最大跌幅百分比" align="center" prop="maxDownPrecent" />
@@ -206,9 +197,6 @@
         </el-form-item>
         <el-form-item label="最终价格" prop="finalPrice">
           <el-input v-model="form.finalPrice" placeholder="请输入最终价格" />
-        </el-form-item>
-        <el-form-item label="数量" prop="dealCount">
-          <el-input v-model="form.dealCount" placeholder="请输入数量" />
         </el-form-item>
         <el-form-item label="最高价" prop="high">
           <el-input v-model="form.high" placeholder="请输入最高价" />

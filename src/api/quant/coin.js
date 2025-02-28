@@ -42,3 +42,12 @@ export function delCoin(id) {
     method: 'delete'
   })
 }
+
+
+export function addToFavoritesList(ids){
+  return request({
+    url: '/quant/coin/addToFavoritesList',
+    data: ids,
+    method: 'put'
+  })
+}

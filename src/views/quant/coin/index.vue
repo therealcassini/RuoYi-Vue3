@@ -46,19 +46,35 @@
           v-hasPermi="['quant:coin:export']"
         >导出</el-button>
       </el-col>
+      <el-col :span="1.5">
+        <el-button
+          type="primary"
+          plain
+          icon="Refresh"
+          @click="handleAddFavorites"
+        >添加到自选</el-button>
+      </el-col>
       <right-toolbar v-model:showSearch="showSearch" @queryTable="getList"></right-toolbar>
     </el-row>
 
-    <el-table v-loading="loading" :data="coinList" @selection-change="handleSelectionChange">
+    <el-table v-loading="loading" :data="coinList" @selection-change="handleSelectionChange" >
       <el-table-column type="selection" width="55" align="center" />
-      <el-table-column label="ID" align="center" prop="id" />
-      <el-table-column label="币种符号" align="center" prop="symbol" />
+<!--      <el-table-column label="ID" align="center" prop="id" />-->
+      <el-table-column label="币种符号" align="center" >
+        <template #default="scope">
+<!--          <el-link :href="'../market/detail/'+scope.row.symbol" target="_blank" :style="{color: '#409EFF' ,fontWeight: 'bold', textDecoration: 'none'}">{{ scope.row.symbol }}</el-link>-->
+<!--          <el-link :href="scope.row.symbol" target="_blank" :style="{color: '#409EFF' ,fontWeight: 'bold', textDecoration: 'none'}">{{ scope.row.symbol }}</el-link>-->
+          <el-text type="success" @click="toDetailPage(scope.row.symbol,100)">{{ scope.row.symbol }}</el-text>
+        </template>
+      </el-table-column>
       <el-table-column label="币种全称" align="center" prop="name" />
       <el-table-column label="市值" align="center" prop="marketCap" />
       <el-table-column label="当前价格" align="center" prop="price" />
       <el-table-column label="24小时的交易量" align="center" prop="volume24h" />
       <el-table-column label="流通供应量" align="center" prop="circulatingSupply" />
       <el-table-column label="最大供应量" align="center" prop="maxSupply" />
+      <el-table-column label="是否自选" align="center" prop="favorite" class-name="favorite-row"/>
+
       <el-table-column label="创建时间" align="center" prop="createdAt" width="180">
         <template #default="scope">
           <span>{{ parseTime(scope.row.createdAt, '{y}-{m}-{d}') }}</span>
@@ -124,7 +140,7 @@
 </template>
 
 <script setup name="Coin">
-import { listCoin, getCoin, delCoin, addCoin, updateCoin } from "@/api/quant/coin";
+import { listCoin, getCoin, delCoin, addCoin, updateCoin ,addToFavoritesList } from "@/api/quant/coin";
 
 const { proxy } = getCurrentInstance();
 
@@ -142,7 +158,7 @@ const data = reactive({
   form: {},
   queryParams: {
     pageNum: 1,
-    pageSize: 10,
+    pageSize: 200,
   },
   rules: {
     symbol: [
@@ -153,6 +169,7 @@ const data = reactive({
     ],
   }
 });
+
 
 const { queryParams, form, rules } = toRefs(data);
 
@@ -257,6 +274,18 @@ function handleDelete(row) {
   }).catch(() => {});
 }
 
+/** 删除按钮操作 */
+function handleAddFavorites(row) {
+  const _ids = row.id || ids.value;
+  proxy.$modal.confirm('是否确认添加币种知识库编号为"' + _ids + '"的数据项？').then(function() {
+    return addToFavoritesList(_ids);
+  }).then(() => {
+    proxy.$modal.msgSuccess("添加自选成功");
+  }).catch(() => {});
+}
+
+
+
 /** 导出按钮操作 */
 function handleExport() {
   proxy.download('quant/coin/export', {
@@ -265,4 +294,11 @@ function handleExport() {
 }
 
 getList();
+
+//跳转到新的界面
+function toDetailPage(symbol,days){
+  // alert("跳转到新的界面"+symbol+days)
+  proxy.$router.push(`./detail/${symbol}/${days}`)
+}
+
 </script>

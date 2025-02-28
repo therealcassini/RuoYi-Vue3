@@ -116,7 +116,7 @@ import {
 import {getOperatordefinitionMap} from "@/api/cassini/operatordefinition"
 
 import OperatorDrawer from './components/OperatorDrawer.vue'
-import {  customAddTaskdefinition ,getTaskdefinitionByUUID } from "@/api/cassini/taskdefinition"
+import {customAddTaskdefinition ,getTaskdefinitionByUUID } from "@/api/cassini/taskdefinition"
 import {getProcessdefinitionDetail,updateProcessdefinition} from "@/api/cassini/processdefinition"
 import {updateProcessRelation} from "@/api/cassini/taskrelationdefinition"
 import {useRoute} from "vue-router";
@@ -508,6 +508,8 @@ const handleSaveCanvas = () => {
   updateProcessRelation(taskRelationList).then(response => {
     console.log("更新连线信息成功！")
   })
+
+  proxy.$modal.msgSuccess("流程保存成功");
 
 }
 </script>

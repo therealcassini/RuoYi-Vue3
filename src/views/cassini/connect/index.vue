@@ -470,6 +470,7 @@ function checkForm() {
   proxy.$refs["connectRef"].validate(valid => {
     if (valid) {
         checkConnect(form.value).then(response => {
+          console.log(response.data)
           proxy.$modal.msgSuccess("连接测试成功");
         });
     }

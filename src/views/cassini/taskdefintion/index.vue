@@ -139,7 +139,7 @@
 </template>
 
 <script setup name="Taskdefintion">
-import { listTaskdefintion, getTaskdefintion, delTaskdefintion, addTaskdefintion, updateTaskdefintion } from "@/api/cassini/taskdefintion";
+import { listTaskdefinition, getTaskdefinition, delTaskdefintion, addTaskdefinition, updateTaskdefinition } from "@/api/cassini/taskdefinition.js";
 
 const { proxy } = getCurrentInstance();
 
